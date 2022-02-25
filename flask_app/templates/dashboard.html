@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet'>
+<title>Dashboard</title>
+</head>
+<body style = "margin: 5% 10%";>
+    <h4>Welcome, {{ user.first_name }}</h4>
+    <h5>All Recipes</h5>
+    <hr>
+    <div class ="container">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Under 30 minutes?</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recipe in recipes %}
+            <tr>
+                <td scope="row">{{ recipe.name }}</td>
+                {% if recipe.under30 == 1 %}
+                <td>Yes</td>
+                {% else %}
+                <td>No</td>
+                {% endif %}
+
+                <td scope="row">
+                <a href="/recipes/{{recipe.id}}"><input type="button" class="btn btn-outline-dark btn-sm" type="submit" value="View"></a>
+                {% if recipe.user_id == session.user_id %}
+                    <a href="/recipes/edit/{{recipe.id}}"><input type="button" class="btn btn-outline-dark btn-sm" type="submit" value="Edit"></a></a>
+                    <a href="/recipes/delete/{{recipe.id}}"><input type="button" class="btn btn-outline-dark btn-sm" type="submit" value="Delete"></a></td>
+                {% endif %}
+            <tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        <a href="/recipes/new"><input type="button" class="btn btn-outline-dark btn-sm" type="submit" value="Create"></a>
+        <a href="/logout"><input type="button" class="btn btn-outline-dark btn-sm" type="submit" value="Logout"></a>
+    </div>
+</body>
+</html>
